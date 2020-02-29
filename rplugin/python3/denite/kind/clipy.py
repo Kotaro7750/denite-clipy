@@ -9,4 +9,7 @@ class Kind(Base):
 
     def action_paste(self,context):
         targets = context['targets']
-        self.vim.command('r {}'.format(targets[0]['action__path']))
+        filename = targets[0]['action__path']
+        line = targets[0]['__line']
+
+        self.vim.feedkeys(":put =readfile('{}')[{}]\n".format(filename,line))
