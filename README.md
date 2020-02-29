@@ -1,4 +1,5 @@
-#denite-clipy
+# denite-clipy
+
 denite-clipy is denite extension which makes it easier to paste snippet from any directory.
 
 ## setting
