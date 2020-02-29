@@ -13,11 +13,21 @@ class Source(Base):
         context['__bufnr'] = str(self.vim.call('bufnr','%'))
 
     def gather_candidates(self,context):
-        files = glob.glob("/home/denjo/Develope/algorithm/**/*.hpp",recursive = True)
-        return [self._converter(file) for file in files]
+        candidates = []
+
+        clipy_root = self.vim.vars['clipy_root']
+        clipy_filetype = self.vim.vars['clipy_filetype']
+
+        for filetype in clipy_filetype:
+            files = glob.glob("{}/**/*.{}".format(clipy_root,filetype),recursive = True)
+            for file in files:
+                candidates.append(self._converter(file))
+
+        return candidates
 
     def _converter(self,filename):
         return {
                 'word':os.path.basename(filename),
                 'action__path':filename,
                 }
+
