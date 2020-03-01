@@ -12,8 +12,8 @@ set these variables in your vimscript.
 ```vim
 "example
 let g:clipy_root = expand("~/snippet")
-let g:clipy_filetype = ["hpp","cpp"]
+let g:clipy_filetype = {'cpp':['hpp','cpp'],'python':['py']}
 ```
 
-When you set like above, :Denite clipy command shows ~/snippet/**/*.(hpp|cpp)
+When you set like above and edit cpp file, :Denite clipy command shows ~/snippet/**/*.(hpp|cpp).
 
