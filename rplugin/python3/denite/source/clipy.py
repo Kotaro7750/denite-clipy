@@ -3,6 +3,11 @@ import glob
 import os
 import re
 
+CLIPY_HIGHLIGHT_SYNTAX = [
+    {'name':'Title','link':'Statement','re':r'.\+\%(:\)\@='},
+    {'name':'Description','link':'Comment','re':r'\%(:\)\@<=.\+'},
+]
+
 class Source(Base):
 
     def __init__(self, vim):
@@ -52,4 +57,10 @@ class Source(Base):
                     extracted.append({'word':body,'__line':"{}:{}".format(line_start,len(lines)),'action__path':filename})
 
         return extracted
-        
+
+    def highlight(self):
+        for syn in CLIPY_HIGHLIGHT_SYNTAX:
+            self.vim.command(
+                'syntax match {0}_{1} /{2}/ contained containedin={0}'.format(self.syntax_name, syn['name'], syn['re']))
+            self.vim.command(
+                'highlight default link {}_{} {}'.format(self.syntax_name, syn['name'], syn['link']))
