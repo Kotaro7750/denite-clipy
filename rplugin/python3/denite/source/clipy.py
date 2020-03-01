@@ -23,7 +23,7 @@ class Source(Base):
         candidates = []
 
         clipy_root = self.vim.vars['clipy_root']
-        clipy_filetype = self.vim.vars['clipy_filetype'][context['__filetype']]
+        clipy_filetype = self.vim.vars['clipy_filetype'].get(context['__filetype'],[])
 
         for filetype in clipy_filetype:
             files = glob.glob("{}/**/*.{}".format(clipy_root,filetype),recursive = True)
