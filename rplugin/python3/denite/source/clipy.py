@@ -17,12 +17,13 @@ class Source(Base):
 
     def on_init(self,context):
         context['__bufnr'] = str(self.vim.call('bufnr','%'))
+        context['__filetype'] = str(self.vim.command_output('echo &filetype'))
 
     def gather_candidates(self,context):
         candidates = []
 
         clipy_root = self.vim.vars['clipy_root']
-        clipy_filetype = self.vim.vars['clipy_filetype']
+        clipy_filetype = self.vim.vars['clipy_filetype'][context['__filetype']]
 
         for filetype in clipy_filetype:
             files = glob.glob("{}/**/*.{}".format(clipy_root,filetype),recursive = True)
